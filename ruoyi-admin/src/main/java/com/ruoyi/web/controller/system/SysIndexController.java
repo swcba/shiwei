@@ -77,7 +77,7 @@ public class SysIndexController extends BaseController
                 break;
             }
         }
-        String webIndex = "topnav".equalsIgnoreCase(indexStyle) ? "index-topnav" : "index";
+        String webIndex = "topnav".equalsIgnoreCase(indexStyle) ? "index" : "index";
         return webIndex;
     }
 
