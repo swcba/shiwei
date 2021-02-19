@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.FoodMapper">
+    
+    <resultMap type="Food" id="FoodResult">
+        <result property="foodId"    column="food_id"    />
+        <result property="foodName"    column="food_name"    />
+        <result property="foodSate"    column="food_sate"    />
+        <result property="foodDescribe"    column="food_describe"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="foodPrice"    column="food_price"    />
+    </resultMap>
+
+    <sql id="selectFoodVo">
+        select food_id, food_name, food_sate, food_describe, update_by, create_time, create_by, update_time, food_price from food
+    </sql>
+
+    <select id="selectFoodList" parameterType="Food" resultMap="FoodResult">
+        <include refid="selectFoodVo"/>
+        <where>  
+            <if test="foodName != null  and foodName != ''"> and food_name like concat('%', #{foodName}, '%')</if>
+            <if test="foodSate != null  and foodSate != ''"> and food_sate = #{foodSate}</if>
+            <if test="foodDescribe != null  and foodDescribe != ''"> and food_describe = #{foodDescribe}</if>
+            <if test="foodPrice != null  and foodPrice != ''"> and food_price = #{foodPrice}</if>
+        </where>
+    </select>
+    
+    <select id="selectFoodById" parameterType="Long" resultMap="FoodResult">
+        <include refid="selectFoodVo"/>
+        where food_id = #{foodId}
+    </select>
+        
+    <insert id="insertFood" parameterType="Food" useGeneratedKeys="true" keyProperty="foodId">
+        insert into food
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="foodName != null">food_name,</if>
+            <if test="foodSate != null">food_sate,</if>
+            <if test="foodDescribe != null">food_describe,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="foodPrice != null">food_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="foodName != null">#{foodName},</if>
+            <if test="foodSate != null">#{foodSate},</if>
+            <if test="foodDescribe != null">#{foodDescribe},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="foodPrice != null">#{foodPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFood" parameterType="Food">
+        update food
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="foodName != null">food_name = #{foodName},</if>
+            <if test="foodSate != null">food_sate = #{foodSate},</if>
+            <if test="foodDescribe != null">food_describe = #{foodDescribe},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="foodPrice != null">food_price = #{foodPrice},</if>
+        </trim>
+        where food_id = #{foodId}
+    </update>
+
+    <delete id="deleteFoodById" parameterType="Long">
+        delete from food where food_id = #{foodId}
+    </delete>
+
+    <delete id="deleteFoodByIds" parameterType="String">
+        delete from food where food_id in 
+        <foreach item="foodId" collection="array" open="(" separator="," close=")">
+            #{foodId}
+        </foreach>
+    </delete>
+
+</mapper>
