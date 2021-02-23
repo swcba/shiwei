@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增财政支出')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-finance-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">：</label>
+                <div class="col-sm-8">
+                    <input name="delFlag" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收入：</label>
+                <div class="col-sm-8">
+                    <input name="finIncome" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">支出：</label>
+                <div class="col-sm-8">
+                    <input name="finExpenditure" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/finance"
+        $("#form-finance-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-finance-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
