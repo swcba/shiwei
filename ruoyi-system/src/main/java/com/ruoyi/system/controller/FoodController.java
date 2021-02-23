@@ -2,11 +2,14 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.system.domain.Food;
 import com.ruoyi.system.service.IFoodService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,6 +78,7 @@ public class FoodController extends BaseController
     @GetMapping("/add")
     public String add()
     {
+
         return prefix + "/add";
     }
 
@@ -87,6 +91,9 @@ public class FoodController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Food food)
     {
+        SysUser user = ShiroUtils.getSysUser();
+        food.setCreateBy(user.getUserId().toString());
+        food.setUpdateBy(user.getUserId().toString());
         return toAjax(foodService.insertFood(food));
     }
 

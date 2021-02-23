@@ -55,6 +55,7 @@ public class OrderServiceImpl implements IOrderService
     public int insertOrder(Order order)
     {
         order.setCreateTime(DateUtils.getNowDate());
+        order.setUpdateTime(DateUtils.getNowDate());
         return orderMapper.insertOrder(order);
     }
 

@@ -55,6 +55,7 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService
     public int insertOrderDetails(OrderDetails orderDetails)
     {
         orderDetails.setCreateTime(DateUtils.getNowDate());
+        orderDetails.setUpdateTime(DateUtils.getNowDate());
         return orderDetailsMapper.insertOrderDetails(orderDetails);
     }
 

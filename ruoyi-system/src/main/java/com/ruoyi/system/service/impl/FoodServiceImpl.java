@@ -55,6 +55,7 @@ public class FoodServiceImpl implements IFoodService
     public int insertFood(Food food)
     {
         food.setCreateTime(DateUtils.getNowDate());
+        food.setUpdateTime(DateUtils.getNowDate());
         return foodMapper.insertFood(food);
     }
 

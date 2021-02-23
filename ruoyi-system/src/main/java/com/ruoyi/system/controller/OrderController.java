@@ -1,6 +1,9 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,6 +89,9 @@ public class OrderController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Order order)
     {
+        SysUser user = ShiroUtils.getSysUser();
+        order.setCreateBy(user.getUserId().toString());
+        order.setUpdateBy(user.getUserId().toString());
         return toAjax(orderService.insertOrder(order));
     }
 

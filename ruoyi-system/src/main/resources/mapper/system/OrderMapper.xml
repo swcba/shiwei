@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectOrderVo">
-        select order_id, update_by, create_time, order_describe, create_by, update_time, del_flag, order_number, order_state, order_price, food_number, pay_way, remark from order
+        select order_id, update_by, create_time, order_describe, create_by, update_time, del_flag, order_number, order_state, order_price, food_number, pay_way, remark from `order`
     </sql>
 
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="orderId">
-        insert into order
+        insert into `order`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="updateBy != null">update_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateOrder" parameterType="Order">
-        update order
+        update `order`
         <trim prefix="SET" suffixOverrides=",">
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -93,11 +93,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteOrderById" parameterType="Long">
-        delete from order where order_id = #{orderId}
+        delete from `order` where order_id = #{orderId}
     </delete>
 
     <delete id="deleteOrderByIds" parameterType="String">
-        delete from order where order_id in 
+        delete from `order` where order_id in
         <foreach item="orderId" collection="array" open="(" separator="," close=")">
             #{orderId}
         </foreach>
