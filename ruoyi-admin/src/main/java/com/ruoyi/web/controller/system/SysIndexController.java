@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.Finance;
+import com.ruoyi.system.domain.Order;
+import com.ruoyi.system.service.IFinanceService;
+import com.ruoyi.system.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,6 +48,12 @@ public class SysIndexController extends BaseController
 
     @Autowired
     private SysPasswordService passwordService;
+
+    @Autowired
+    private IFinanceService financeService;
+
+    @Autowired
+    private IOrderService orderService;
 
     // 系统首页
     @GetMapping("/index")
@@ -127,6 +138,11 @@ public class SysIndexController extends BaseController
     public String main(ModelMap mmap)
     {
         mmap.put("version", RuoYiConfig.getVersion());
+        List<Finance> list = financeService.selectFinanceByMonth();
+        mmap.put("finance",list.get(0));
+
+        Long orders = orderService.selectOrderNum();
+        mmap.put("orders",orders);
         return "main_v1";
     }
 
