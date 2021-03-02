@@ -1,6 +1,9 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,6 +66,7 @@ public class FinanceController extends BaseController
     @ResponseBody
     public AjaxResult export(Finance finance)
     {
+
         List<Finance> list = financeService.selectFinanceList(finance);
         ExcelUtil<Finance> util = new ExcelUtil<Finance>(Finance.class);
         return util.exportExcel(list, "finance");
@@ -86,6 +90,9 @@ public class FinanceController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Finance finance)
     {
+        SysUser user = ShiroUtils.getSysUser();
+        finance.setCreateBy(user.getUserId().toString());
+        finance.setUpdateBy(user.getUserId().toString());
         return toAjax(financeService.insertFinance(finance));
     }
 

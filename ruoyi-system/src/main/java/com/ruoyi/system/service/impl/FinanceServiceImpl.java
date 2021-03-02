@@ -1,6 +1,10 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.common.annotation.DataSource;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +50,18 @@ public class FinanceServiceImpl implements IFinanceService
     }
 
     /**
+     *
+     *查询当月收入
+     *
+     * @return: java.util.List<com.ruoyi.system.domain.Finance>
+     */
+    @Override
+    public List<Finance> selectFinanceByMonth() {
+       int month = Calendar.MONTH;
+        return financeMapper.selectFinanceByMonth(month);
+    }
+
+    /**
      * 新增财政支出
      * 
      * @param finance 财政支出
@@ -55,6 +71,7 @@ public class FinanceServiceImpl implements IFinanceService
     public int insertFinance(Finance finance)
     {
         finance.setCreateTime(DateUtils.getNowDate());
+        finance.setUpdateTime(DateUtils.getNowDate());
         return financeMapper.insertFinance(finance);
     }
 
@@ -67,6 +84,7 @@ public class FinanceServiceImpl implements IFinanceService
     @Override
     public int updateFinance(Finance finance)
     {
+
         finance.setUpdateTime(DateUtils.getNowDate());
         return financeMapper.updateFinance(finance);
     }
@@ -94,4 +112,6 @@ public class FinanceServiceImpl implements IFinanceService
     {
         return financeMapper.deleteFinanceById(financeId);
     }
+
+
 }

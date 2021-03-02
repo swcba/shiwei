@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.Order;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 订单Mapper接口
@@ -58,4 +59,31 @@ public interface OrderMapper
      * @return 结果
      */
     public int deleteOrderByIds(String[] orderIds);
+
+    /**
+     *查询订单数目
+     *
+     * @param flag
+     * @param time
+     *
+     * @return: java.lang.Long
+     * @author: shiwei1
+     * @date:  2021/2/25/11:02
+     */
+    Long selectOrderNum(@Param("flag") Integer flag, @Param("time") Integer time);
+
+
+    /**
+     *根据年月日查询订单信息
+     *
+     *
+     * @param year
+     * @param month
+     * @param day
+     *
+     * @return: java.util.List<com.ruoyi.system.domain.Order>
+     * @author: shiwei1
+     * @date:  2021/2/26/9:52
+     */
+    Long selectOrderStatistics(@Param("year") Integer year,@Param("month") Integer month,@Param("day") Integer day);
 }

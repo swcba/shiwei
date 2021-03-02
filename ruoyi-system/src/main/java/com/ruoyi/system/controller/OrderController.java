@@ -58,6 +58,20 @@ public class OrderController extends BaseController
     }
 
     /**
+     *根据年月日查询订单数目
+     * @param flag
+     * @author: shiwei1
+     * @date:  2021/2/26/9:33
+     */
+    @PostMapping("/OrderStatistics")
+    @ResponseBody
+    public Long OrderStatistics(Integer flag){
+        Long orderPrice = orderService.selectOrderStatistics(flag);
+        return orderPrice;
+    }
+
+
+    /**
      * 导出订单列表
      */
     @RequiresPermissions("system:order:export")
@@ -129,4 +143,6 @@ public class OrderController extends BaseController
     {
         return toAjax(orderService.deleteOrderByIds(ids));
     }
+
+
 }

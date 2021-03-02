@@ -28,6 +28,13 @@ public interface IFinanceService
     public List<Finance> selectFinanceList(Finance finance);
 
     /**
+     *
+     *查询当月收入
+     *
+     * @return: java.util.List<com.ruoyi.system.domain.Finance>
+     */
+    public List<Finance> selectFinanceByMonth();
+     /**
      * 新增财政支出
      * 
      * @param finance 财政支出
@@ -58,4 +65,6 @@ public interface IFinanceService
      * @return 结果
      */
     public int deleteFinanceById(Long financeId);
+
+
 }

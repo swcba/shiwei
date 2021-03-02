@@ -31,6 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectFinanceVo"/>
         where finance_id = #{financeId}
     </select>
+
+    <select id="selectFinanceByMonth" parameterType="Integer" resultMap="FinanceResult">
+        <include refid="selectFinanceVo"/>
+        where month(create_time) = #{month} and del_flag = 0
+    </select>
         
     <insert id="insertFinance" parameterType="Finance" useGeneratedKeys="true" keyProperty="financeId">
         insert into finance

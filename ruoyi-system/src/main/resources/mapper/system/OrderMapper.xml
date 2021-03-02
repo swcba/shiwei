@@ -24,6 +24,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select order_id, update_by, create_time, order_describe, create_by, update_time, del_flag, order_number, order_state, order_price, food_number, pay_way, remark from `order`
     </sql>
 
+    <select id="selectOrderNum" parameterType="Integer" resultType="Long">
+        select count(*) from  `order`
+        <where>
+            <if test="flag != null and flag == 0">and day(create_time) = #{time}</if>
+            <if test="flag != null and flag == 1">and month(create_time) = #{time}</if>
+            <if test="flag != null and flag == 2">and YEAR(create_time) = #{time}</if>
+            and del_flag = 0
+        </where>
+    </select>
+
+    <select id="selectOrderStatistics" parameterType="Integer" resultType="Long">
+        select sum(order_price) from `order`
+        <where>
+            <if test="day != null ">and day(create_time) = #{day}</if>
+            <if test="month != null ">and month(create_time) = #{month}</if>
+            <if test="year != null ">and YEAR(create_time) = #{year}</if>
+            and del_flag = 0
+        </where>
+
+    </select>
+
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         <where>  

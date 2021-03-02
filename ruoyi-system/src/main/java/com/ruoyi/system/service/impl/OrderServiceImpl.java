@@ -1,7 +1,10 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.DateBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.OrderMapper;
@@ -94,5 +97,61 @@ public class OrderServiceImpl implements IOrderService
     public int deleteOrderById(Long orderId)
     {
         return orderMapper.deleteOrderById(orderId);
+    }
+
+    /**
+     *查询订单数目
+     *
+     * @return: java.lang.Long
+     * @author: shiwei1
+     * @date:  2021/2/25/10:58
+     */
+    @Override
+    public Long selectOrderNum(Integer flag) {
+
+        if (flag != null) {
+            DateBean dateBean = getData(flag);
+            return orderMapper.selectOrderNum(flag,dateBean.getYear());
+        }
+        return orderMapper.selectOrderNum(null,null);
+    }
+
+    /**
+     *根据年月日查询订单信息
+     *
+     * @return: java.util.List<com.ruoyi.system.domain.Order>
+     * @author: shiwei1
+     * @date:  2021/2/26/9:52
+     */
+    @Override
+    public Long selectOrderStatistics(Integer flag) {
+
+        if (flag != null) {
+            DateBean dateBean = getData(flag);
+            return orderMapper.selectOrderStatistics(dateBean.getYear(),dateBean.getMonth(),dateBean.getDay());
+        }
+        return orderMapper.selectOrderStatistics(null,null,null);
+    }
+
+
+    public DateBean getData(Integer flag){
+
+        DateBean dateBean = new DateBean();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        switch (flag){
+            case 0:
+                dateBean.setYear(calendar.get(Calendar.YEAR));
+                dateBean.setMonth(calendar.get(Calendar.MONTH)+1);
+                dateBean.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            case 1:
+                dateBean.setYear(calendar.get(Calendar.YEAR));
+                dateBean.setMonth(calendar.get(Calendar.MONTH)+1);
+            case 2:
+                dateBean.setYear(calendar.get(Calendar.YEAR));
+
+        }
+        return dateBean;
     }
 }

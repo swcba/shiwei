@@ -58,4 +58,27 @@ public interface IOrderService
      * @return 结果
      */
     public int deleteOrderById(Long orderId);
+
+    /**
+     *查询订单数目
+     *
+     * @param flag
+     *
+     * @return: java.lang.Long
+     * @author: shiwei1
+     * @date:  2021/2/25/10:58
+     */
+    Long selectOrderNum(Integer flag);
+
+    /**
+     *根据年月日查询订单信息
+     *
+     * @param flag
+     *
+     * @return: java.util.List<com.ruoyi.system.domain.Order>
+     * @author: shiwei1
+     * @date:  2021/2/26/9:52
+     */
+
+    Long selectOrderStatistics(Integer flag);
 }

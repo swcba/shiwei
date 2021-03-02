@@ -58,4 +58,15 @@ public interface FinanceMapper
      * @return 结果
      */
     public int deleteFinanceByIds(String[] financeIds);
+
+
+    /**
+     *获取本月收入
+     *
+     * @param month  当前月份
+     *
+     * @return: java.util.List<com.ruoyi.system.domain.Finance>
+     */
+
+    List<Finance> selectFinanceByMonth(int month);
 }
