@@ -133,7 +133,17 @@ public class SysIndexController extends BaseController
         CookieUtils.setCookie(response, "nav-style", style);
     }
 
-    // 系统介绍
+    /**
+     *系统介绍
+     *
+     * @Title:
+     * @param mmap
+     *
+     * @return:
+     * @throws
+     * @author: shiwei1
+     * @date:  2021/2/26/13:21
+     */
     @GetMapping("/system/main")
     public String main(ModelMap mmap)
     {
@@ -141,8 +151,12 @@ public class SysIndexController extends BaseController
         List<Finance> list = financeService.selectFinanceByMonth();
         mmap.put("finance",list.get(0));
 
-        Long orders = orderService.selectOrderNum();
+        Long ordersOfYear = orderService.selectOrderNum(2);
+        Long orders = orderService.selectOrderNum(null);
+        Long orderPrice = orderService.selectOrderStatistics(2);
+        mmap.put("ordersOfYear",ordersOfYear);
         mmap.put("orders",orders);
+        mmap.put("orderPrice",orderPrice);
         return "main_v1";
     }
 

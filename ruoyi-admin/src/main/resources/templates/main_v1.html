@@ -18,7 +18,7 @@
             <div class="col-sm-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <span class="label label-success pull-right">月</span>
+                        <span class="label label-success pull-right">年</span>
                         <h5>收入</h5>
                     </div>
                     <div class="ibox-content">
@@ -38,7 +38,7 @@
                         <h5>订单</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins" th:text="${orders}"></h1>
+                        <h1 class="no-margins" th:text="${ordersOfYear}"></h1>
                         <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i>
                         </div>
                         <small>新订单</small>
@@ -83,8 +83,8 @@
                         <div class="pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-xs btn-white " id="btnDay">天</button>
-                                <button type="button" class="btn btn-xs btn-white active" id="btnMonth">月</button>
-                                <button type="button" class="btn btn-xs btn-white" id="btnYear">年</button>
+                                <button type="button" class="btn btn-xs btn-white " id="btnMonth">月</button>
+                                <button type="button" class="btn btn-xs btn-white active" id="btnYear">年</button>
                             </div>
                         </div>
                     </div>
@@ -98,8 +98,8 @@
                             <div class="col-sm-3">
                                 <ul class="stat-list">
                                     <li>
-                                        <h2 class="no-margins">2,346</h2>
-                                        <small>订单总数</small>
+                                        <h2 class="no-margins" th:text="${orders} == null ? 0 : ${orders}" id="orderSum"></h2>
+                                        <small >订单总数</small>
                                         <div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i>
                                         </div>
                                         <div class="progress progress-mini">
@@ -107,8 +107,8 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <h2 class="no-margins ">4,422</h2>
-                                        <small>最近一个月订单</small>
+                                        <h2 class="no-margins " th:text="${ordersOfYear} == null ? 0 : ${ordersOfYear}" id="ordersOfYear"></h2>
+                                        <small id="orders">年订单数</small>
                                         <div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i>
                                         </div>
                                         <div class="progress progress-mini">
@@ -116,8 +116,8 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <h2 class="no-margins ">9,180</h2>
-                                        <small>最近一个月销售额</small>
+                                        <h2 class="no-margins " id="orderPrice" th:text="${orderPrice} == null ? 0 : ${orderPrice}"></h2>
+                                        <small id="sale">年销售额</small>
                                         <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i>
                                         </div>
                                         <div class="progress progress-mini">
@@ -221,22 +221,73 @@
     <th:block th:include="include :: sparkline-js" />
     <script type="text/javascript">
         $("#btnDay").click(function () {
-            $("#btnMonth").removeClass("btn btn-xs btn-white active");
+            $("#btnMonth").removeClass();
             $("#btnMonth").addClass("btn btn-xs btn-white");
+            $("#btnYear").removeClass();
+            $("#btnYear").addClass("btn btn-xs btn-white");
 
-            $("#btnDay").removeClass("btn btn-xs btn-white");
+            $("#btnDay").removeClass();
             $("#btnDay").addClass("btn btn-xs btn-white active");
 
-            // $.ajax({
-            //     url:system/main,
-            //     success:function (result) {
-            //         alert(0)
-            //     }
-            //
-            // })
+            $.ajax({
+                url: "order/OrderStatistics?flag=0",
+                type: "post",
+                success: function (result) {
+                    $("#orders").text("日订单数");
+                    $("#sale").text("日销售额");
+                    $("#orderPrice").text(result == "" ? 0 : result)
+                }
+
+                }
+            )
 
         })
 
+        $("#btnMonth").click(function () {
+            $("#btnDay").removeClass();
+            $("#btnDay").addClass("btn btn-xs btn-white");
+            $("#btnYear").removeClass();
+            $("#btnYear").addClass("btn btn-xs btn-white");
+
+            $("#btnMonth").removeClass();
+            $("#btnMonth").addClass("btn btn-xs btn-white active");
+
+            $.ajax({
+                    url: "order/OrderStatistics?flag=1",
+                    type: "post",
+                    success: function (result) {
+                        $("#orders").text("月订单数");
+                        $("#sale").text("月销售额");
+                        $("#orderPrice").text(result == "" ? 0 : result)
+                    }
+
+                }
+            )
+
+        })
+
+        $("#btnYear").click(function () {
+            $("#btnMonth").removeClass();
+            $("#btnMonth").addClass("btn btn-xs btn-white");
+            $("#btnDay").removeClass();
+            $("#btnDay").addClass("btn btn-xs btn-white");
+
+            $("#btnYear").removeClass();
+            $("#btnYear").addClass("btn btn-xs btn-white active");
+
+            $.ajax({
+                    url: "order/OrderStatistics?flag=2",
+                    type: "post",
+                    success: function (result) {
+                        $("#orders").text("年订单数");
+                        $("#sale").text("年销售额");
+                        $("#orderPrice").text(result == "" ? 0 : result )
+                    }
+
+                }
+            )
+
+        })
     </script>
     <script type="text/javascript">
 
