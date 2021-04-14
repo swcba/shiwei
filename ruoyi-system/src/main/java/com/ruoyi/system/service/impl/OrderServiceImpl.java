@@ -1,21 +1,23 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.DateBean;
+import com.ruoyi.system.domain.Order;
+import com.ruoyi.system.domain.OrderStatistics;
+import com.ruoyi.system.mapper.OrderMapper;
+import com.ruoyi.system.service.IOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.DateBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.ruoyi.system.mapper.OrderMapper;
-import com.ruoyi.system.domain.Order;
-import com.ruoyi.system.service.IOrderService;
-import com.ruoyi.common.core.text.Convert;
 
 /**
  * 订单Service业务层处理
  * 
- * @author ruoyi
+ * @author shiwei
  * @date 2021-02-19
  */
 @Service
@@ -119,18 +121,25 @@ public class OrderServiceImpl implements IOrderService
     /**
      *根据年月日查询订单信息
      *
-     * @return: java.util.List<com.ruoyi.system.domain.Order>
+     * @return: java.util.List<Order>
      * @author: shiwei1
      * @date:  2021/2/26/9:52
      */
     @Override
-    public Long selectOrderStatistics(Integer flag) {
-
+    public OrderStatistics selectOrderStatistics(Integer flag) {
+        OrderStatistics orderStatistics = new OrderStatistics();
         if (flag != null) {
+
             DateBean dateBean = getData(flag);
-            return orderMapper.selectOrderStatistics(dateBean.getYear(),dateBean.getMonth(),dateBean.getDay());
+
+
+            orderStatistics.setOrderPrices(orderMapper.selectOrderStatistics(dateBean.getYear(),dateBean.getMonth(),dateBean.getDay()));
+            orderStatistics.setOrders(orderMapper.selectOrderNum(flag,flag == 0 ? dateBean.getDay() : flag == 1 ? dateBean.getMonth() : dateBean.getYear()));
+            return orderStatistics;
         }
-        return orderMapper.selectOrderStatistics(null,null,null);
+        orderStatistics.setOrderPrices(orderMapper.selectOrderStatistics(null,null,null));
+        orderStatistics.setOrders(orderMapper.selectOrderNum(null,null));
+        return orderStatistics;
     }
 
 

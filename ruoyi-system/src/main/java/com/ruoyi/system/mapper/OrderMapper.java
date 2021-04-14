@@ -1,13 +1,14 @@
 package com.ruoyi.system.mapper;
 
-import java.util.List;
 import com.ruoyi.system.domain.Order;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 订单Mapper接口
  * 
- * @author ruoyi
+ * @author shiwei
  * @date 2021-02-19
  */
 public interface OrderMapper 
@@ -81,9 +82,9 @@ public interface OrderMapper
      * @param month
      * @param day
      *
-     * @return: java.util.List<com.ruoyi.system.domain.Order>
+     * @return: java.util.List<Order>
      * @author: shiwei1
      * @date:  2021/2/26/9:52
      */
-    Long selectOrderStatistics(@Param("year") Integer year,@Param("month") Integer month,@Param("day") Integer day);
+    Long selectOrderStatistics(@Param("year") Integer year, @Param("month") Integer month, @Param("day") Integer day);
 }

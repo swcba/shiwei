@@ -1,12 +1,14 @@
 package com.ruoyi.system.service;
 
-import java.util.List;
 import com.ruoyi.system.domain.Order;
+import com.ruoyi.system.domain.OrderStatistics;
+
+import java.util.List;
 
 /**
  * 订单Service接口
  * 
- * @author ruoyi
+ * @author shiwei
  * @date 2021-02-19
  */
 public interface IOrderService 
@@ -75,10 +77,10 @@ public interface IOrderService
      *
      * @param flag
      *
-     * @return: java.util.List<com.ruoyi.system.domain.Order>
+     * @return: java.util.List<Order>
      * @author: shiwei1
      * @date:  2021/2/26/9:52
      */
 
-    Long selectOrderStatistics(Integer flag);
+    OrderStatistics selectOrderStatistics(Integer flag);
 }
