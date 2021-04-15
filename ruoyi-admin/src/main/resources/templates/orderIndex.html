@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/flat/flat-ui.min.css}"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/flat/flat-ui.min.js}"></script>
+    <title></title>
+    <style>
+       .row{
+           margin-top: 20px;;
+        }
+        .center{
+            text-align: center;
+        }
+        .pagination{
+            background: #cccccc;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+<!-- Static navbar -->
+<!--<div class="navbar navbar-default navbar-static-top" role="navigation">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+            <!--<a class="navbar-brand" th:href="@{/orderIndex}">世纪餐厅</a>-->
+        <!--</div>-->
+        <!--<div class="navbar-collapse collapse">-->
+            <!--<ul class="nav navbar-nav">-->
+                <!--<li class="active"><a th:href="@{/orderIndex}">首页</a></li>-->
+                <!--<li><a th:href="@{/myOrder}">我的订单</a></li>-->
+                <!--<li><a th:href="@{/UserInfo}">个人中心</a></li>-->
+                <!--<li><a th:href="@{/FriendLink}">友情链接</a></li>-->
+            <!--</ul>-->
+            <!--<ul class="nav navbar-nav navbar-right hidden-sm">-->
+                <!--<li><a th:href="system/web/Login.html">登录</a></li>-->
+                <!--<li><a href="system/web/Register.html">注册</a></li>-->
+                <!--<li>-->
+                    <!--<a href="system/web/Cart.html"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>-->
+            <!--</ul>-->
+        <!--</div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+    <!--</div>-->
+<!--</div>-->
+<!--content-->
+<div class="container">
+    <div class="jumbotron">
+        <a class="navbar-brand"  th:href="@{/orderIndex}">世纪餐厅</a>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTabs">
+        <li class="active"><a onclick="speciality()" >招牌名菜</a></li>
+        <li><a href="#">风味小炒</a></li>
+        <li><a href="#">油炸小吃</a></li>
+    </ul>
+    <div class="row">
+        <div class="col-sm-4 col-md-3"  th:each="food : ${foodList}">
+            <div class="thumbnail"  >
+                <a href="system/web/FoodInfo.html">
+                    <img style="width: 200px; height: 150px; display: block;" alt="100%x200" th:src="@{${food.foodSrc}}" >
+                </a>
+                <div class="caption center">
+                    <h4 th:text="${food.foodName}">书名</h4>
+                    <p><span>价格:</span><span th:text="${food.foodPrice}">100.00</span></p>
+                    <p><a class="btn btn-primary btn-block" role="button" th:onclick="speciality([[${food.foodId}]]);">查看详情</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+</div>
+<script th:inline="javascript">
+
+function speciality(foodid) {
+    $.ajax({
+        url: "/foodInfo",
+        data: {foodid: foodid},
+        type: "post",
+        success: function (result) {
+            window.location.href=result;
+        }
+    });
+
+}
+
+</script>
+</body>
+</html>

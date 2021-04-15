@@ -14,10 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createBy"    column="create_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="foodPrice"    column="food_price"    />
+        <result property="foodSrc"    column="food_src"    />
     </resultMap>
 
     <sql id="selectFoodVo">
-        select food_id, food_name, food_sate, food_describe, update_by, create_time, create_by, update_time, food_price from food
+        select food_id, food_name, food_sate, food_describe, update_by, create_time, create_by, update_time, food_price, food_src from food
     </sql>
 
     <select id="selectFoodList" parameterType="Food" resultMap="FoodResult">
@@ -27,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="foodSate != null  and foodSate != ''"> and food_sate = #{foodSate}</if>
             <if test="foodDescribe != null  and foodDescribe != ''"> and food_describe = #{foodDescribe}</if>
             <if test="foodPrice != null  and foodPrice != ''"> and food_price = #{foodPrice}</if>
+            <if test="foodSrc != null  and foodSrc != ''"> and food_src = #{foodSrc}</if>
         </where>
     </select>
     
@@ -46,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createBy != null">create_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="foodPrice != null">food_price,</if>
+            <if test="foodSrc != null">food_src,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="foodName != null">#{foodName},</if>
@@ -56,6 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createBy != null">#{createBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="foodPrice != null">#{foodPrice},</if>
+            <if test="foodSrc != null">#{foodSrc},</if>
          </trim>
     </insert>
 
@@ -70,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="foodPrice != null">food_price = #{foodPrice},</if>
+            <if test="foodSrc != null">food_src = #{foodSrc},</if>
         </trim>
         where food_id = #{foodId}
     </update>

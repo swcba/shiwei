@@ -13,7 +13,7 @@ import com.ruoyi.common.core.text.Convert;
  * 菜单Service业务层处理
  * 
  * @author ruoyi
- * @date 2021-02-19
+ * @date 2021-04-15
  */
 @Service
 public class FoodServiceImpl implements IFoodService 
@@ -55,7 +55,6 @@ public class FoodServiceImpl implements IFoodService
     public int insertFood(Food food)
     {
         food.setCreateTime(DateUtils.getNowDate());
-        food.setUpdateTime(DateUtils.getNowDate());
         return foodMapper.insertFood(food);
     }
 

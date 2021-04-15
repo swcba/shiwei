@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.Food;
  * 菜单Service接口
  * 
  * @author ruoyi
- * @date 2021-02-19
+ * @date 2021-04-15
  */
 public interface IFoodService 
 {

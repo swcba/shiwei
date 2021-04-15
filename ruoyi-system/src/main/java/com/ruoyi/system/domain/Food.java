@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 菜单对象 food
  * 
  * @author ruoyi
- * @date 2021-02-19
+ * @date 2021-04-15
  */
 public class Food extends BaseEntity
 {
@@ -33,6 +33,10 @@ public class Food extends BaseEntity
     /** 价格 */
     @Excel(name = "价格")
     private String foodPrice;
+
+    /** 图片存取路径 */
+    @Excel(name = "图片存取路径")
+    private String foodSrc;
 
     public void setFoodId(Long foodId) 
     {
@@ -79,6 +83,15 @@ public class Food extends BaseEntity
     {
         return foodPrice;
     }
+    public void setFoodSrc(String foodSrc) 
+    {
+        this.foodSrc = foodSrc;
+    }
+
+    public String getFoodSrc() 
+    {
+        return foodSrc;
+    }
 
     @Override
     public String toString() {
@@ -92,6 +105,7 @@ public class Food extends BaseEntity
             .append("createBy", getCreateBy())
             .append("updateTime", getUpdateTime())
             .append("foodPrice", getFoodPrice())
+            .append("foodSrc", getFoodSrc())
             .toString();
     }
 }

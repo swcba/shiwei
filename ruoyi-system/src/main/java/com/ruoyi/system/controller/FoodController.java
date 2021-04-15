@@ -1,28 +1,29 @@
 package com.ruoyi.system.controller;
 
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.ShiroUtils;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.domain.Food;
-import com.ruoyi.system.service.IFoodService;
+import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.domain.Food;
+import com.ruoyi.system.service.IFoodService;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 菜单Controller
  * 
- * @author shiwei
- * @date 2021-02-19
+ * @author ruoyi
+ * @date 2021-04-15
  */
 @Controller
 @RequestMapping("/system/food")
@@ -73,7 +74,6 @@ public class FoodController extends BaseController
     @GetMapping("/add")
     public String add()
     {
-
         return prefix + "/add";
     }
 
@@ -86,9 +86,6 @@ public class FoodController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Food food)
     {
-        SysUser user = ShiroUtils.getSysUser();
-        food.setCreateBy(user.getUserId().toString());
-        food.setUpdateBy(user.getUserId().toString());
         return toAjax(foodService.insertFood(food));
     }
 
