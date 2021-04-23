@@ -58,20 +58,20 @@
     </div>
 
     <ul class="nav nav-tabs" id="myTabs">
-        <li class="active"><a onclick="speciality()" >招牌名菜</a></li>
-        <li><a href="#">风味小炒</a></li>
-        <li><a href="#">油炸小吃</a></li>
+        <li class="active"><a href="/speciality?foodType=1" >招牌名菜</a></li>
+        <li><a href="/speciality?foodType=2">风味小炒</a></li>
+        <li><a href="/speciality?foodType=3">油炸小吃</a></li>
     </ul>
     <div class="row">
         <div class="col-sm-4 col-md-3"  th:each="food : ${foodList}">
             <div class="thumbnail"  >
-                <a href="system/web/FoodInfo.html">
+                <a th:onclick="foodInfo([[${food.foodId}]]);">
                     <img style="width: 200px; height: 150px; display: block;" alt="100%x200" th:src="@{${food.foodSrc}}" >
                 </a>
                 <div class="caption center">
                     <h4 th:text="${food.foodName}">书名</h4>
                     <p><span>价格:</span><span th:text="${food.foodPrice}">100.00</span></p>
-                    <p><a class="btn btn-primary btn-block" role="button" th:onclick="speciality([[${food.foodId}]]);">查看详情</a></p>
+                    <p><a class="btn btn-primary btn-block" role="button" th:onclick="foodInfo([[${food.foodId}]]);">查看详情</a></p>
                 </div>
             </div>
         </div>
@@ -84,17 +84,19 @@
 </div>
 <script th:inline="javascript">
 
-function speciality(foodid) {
+function foodInfo(foodId) {
     $.ajax({
         url: "/foodInfo",
-        data: {foodid: foodid},
+        data: {foodId: foodId},
         type: "post",
         success: function (result) {
-            window.location.href=result;
+            window.location.href=result+"?"+foodId;
         }
     });
 
 }
+
+
 
 </script>
 </body>

@@ -11,11 +11,18 @@ package com.ruoyi.web.controller.order;/****************************************
  ********************************************************/
 
 
+import com.ruoyi.system.domain.Food;
+import com.ruoyi.system.service.impl.FoodServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,15 +35,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SpecialityController {
 
+    @Autowired
+    private FoodServiceImpl foodService;
 
     @PostMapping("/foodInfo")
     @ResponseBody
-    private String  speciality(@RequestParam String foodid){
+    private String speciality(@RequestParam String foodId) {
         return "/system/web/FoodInfo";
     }
 
+    @GetMapping("/speciality")
+    private String foodType(@RequestParam String foodType, Model model) {
+
+        List<Food> list = new ArrayList<>();
+
+        Food food = foodService.selectFoodById(Long.valueOf(foodType));
+
+        list.add(food);
+
+        model.addAttribute(list);
+
+        return "orderIndex";
+    }
+
     @GetMapping("/system/web/FoodInfo")
-    private String  foodInfo(){
+    private String foodInfo() {
         return "/system/web/FoodInfo";
     }
 
