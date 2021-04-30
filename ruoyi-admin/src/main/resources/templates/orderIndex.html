@@ -69,7 +69,7 @@
                     <img style="width: 200px; height: 150px; display: block;" alt="100%x200" th:src="@{${food.foodSrc}}" >
                 </a>
                 <div class="caption center">
-                    <h4 th:text="${food.foodName}">书名</h4>
+                    <h4 th:text="${food.foodName}">菜名</h4>
                     <p><span>价格:</span><span th:text="${food.foodPrice}">100.00</span></p>
                     <p><a class="btn btn-primary btn-block" role="button" th:onclick="foodInfo([[${food.foodId}]]);">查看详情</a></p>
                 </div>
